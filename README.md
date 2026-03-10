@@ -64,7 +64,24 @@ CPU pinning was performed exclusively via taskset:
 
 ---
 
+
+
 ## How to Reproduce
+
+## Download Required Files
+
+The model and test images are not included in this repository due to file size.
+Download them here:
+
+👉 https://drive.google.com/drive/folders/1uLNtuiEC49BAshq4lwSzyqzpxXyF2oM0?usp=sharing
+
+After downloading:
+- Place `best2.pt` in the root `texttrack-experiment/` folder
+- Place all images into the `images/` folder
+
+
+
+
 
 ### Setup
 ```bash
@@ -113,8 +130,8 @@ texttrack-experiment/
 ├── run_experiment.sh   — one-command reproduction script
 ├── pipeline.py         — YOLO+CLIP inference and timing
 ├── plot_results.py     — generates figures from CSV results
-├── best2.pt            — YOLO model (obtain separately)
-├── images/             — test images (obtain separately)
+├── best2.pt            — YOLO model (see Download section below)
+├── images/             — test images (see Download section below)
 ├── figures/            — output charts
 └── results/            — raw CSV latency logs
 ```
