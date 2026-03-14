@@ -29,7 +29,7 @@ one-core pinning, and two-core pinning using taskset.
 | RAM | 24GB |
 | Python | 3.10 |
 | PyTorch | CPU-only |
-| YOLO | Ultralytics YOLOv8 (fine-tuned on bags, bottles, phones, laptops) |
+| YOLO | Ultralytics YOLO26 fine-tuned on bags, bottles, phones, laptops) |
 | CLIP | ViT-B/32 |
 
 ---
