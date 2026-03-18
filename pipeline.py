@@ -17,18 +17,19 @@ args = parser.parse_args()
 MODEL_PATH = "best2.pt"
 IMAGE_DIR = "./images"
 
-print("Loading YOLO model...")
+print("Loading YOLO26 model...")
 yolo = YOLO(MODEL_PATH)
 
 print("Loading CLIP model...")
 device = "cpu"
 clip_model, preprocess = clip.load("ViT-B/32", device=device)
 
-query = "bag"
+query = "a lost bag or backpack"
 text_tokens = clip.tokenize([query]).to(device)
 
-image_paths = list(Path(IMAGE_DIR).glob("*.jpg")) + \
-              list(Path(IMAGE_DIR).glob("*.png"))
+image_paths = sorted(Path(IMAGE_DIR).glob("*.jpg")) + \
+              sorted(Path(IMAGE_DIR).glob("*.png"))
+image_paths = sorted(image_paths)
 
 if len(image_paths) == 0:
     print("ERROR: No images found in ./images folder")
@@ -51,10 +52,18 @@ for img_path in image_paths:
 
     start = time.perf_counter()
 
-    detections = yolo(frame, verbose=False)
+    detections = yolo.track(
+        frame,
+        tracker="bytetrack.yaml",
+        verbose=False,
+        persist=True
+    )
 
     for result in detections:
-        for box in result.boxes:
+        boxes = result.boxes
+        if boxes is None:
+            continue
+        for box in boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             if x2 <= x1 or y2 <= y1:
                 continue
@@ -96,5 +105,3 @@ print(f"Mean latency     : {arr.mean():.1f}ms")
 print(f"p50 latency      : {np.percentile(arr, 50):.1f}ms")
 print(f"p95 latency      : {np.percentile(arr, 95):.1f}ms")
 print(f"Std deviation    : {arr.std():.1f}ms")
-
-

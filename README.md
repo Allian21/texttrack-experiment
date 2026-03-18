@@ -29,9 +29,8 @@ one-core pinning, and two-core pinning using taskset.
 | RAM | 24GB |
 | Python | 3.10 |
 | PyTorch | CPU-only |
-| YOLO | Ultralytics YOLO26 fine-tuned on bags, bottles, phones, laptops) |
-| CLIP | ViT-B/32 |
-
+| YOLO | YOLO26 (fine-tuned on bags, bottles, phones, and laptops) |
+| ByteTrack | Integrated via Ultralytics tracker |
 ---
 
 ## Key sysctl Settings
@@ -79,10 +78,6 @@ After downloading:
 - Place `best2.pt` in the root `texttrack-experiment/` folder
 - Place all images into the `images/` folder
 
-
-
-
-
 ### Setup
 ```bash
 git clone https://github.com/yourusername/texttrack-experiment
@@ -95,8 +90,9 @@ pip install git+https://github.com/openai/CLIP.git
 pip install opencv-python-headless numpy matplotlib pandas pillow psutil
 ```
 
-Place your YOLO model as `best2.pt` in the root folder.
-Place 29 test images in the `./images/` folder.
+- Place your YOLO model as `best2.pt` in the root folder.
+- Place 50 consecutive CCTV frames in the `./images/` folder.
+
 
 ### Run (one command)
 ```bash
@@ -115,12 +111,9 @@ results/                  — raw CSV files for all 9 trials
 
 ## Results Summary
 
-| Configuration | Mean | p50 | p95 | Throughput |
-|---|---|---|---|---|
-| Default CFS | 565.4ms | 580.0ms | 938.7ms | 1.77 img/sec |
-| One-Core Pinning | 1040.2ms | 1082.7ms | 1694.1ms | 0.96 img/sec |
-| Two-Core Pinning | 817.8ms | 853.9ms | 1348.2ms | 1.22 img/sec |
-
+| Default CFS (Baseline) | 485.1ms | 501.9ms | 698.3ms | 2.07 img/sec |
+| One-Core Pinning | 944.9ms | 994.7ms | 1305.7ms | 1.06 img/sec |
+| Two-Core Pinning | 715.7ms | 749.4ms | 1003.5ms | 1.40 img/sec |
 ---
 
 ## Folder Structure
