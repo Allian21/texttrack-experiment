@@ -111,9 +111,17 @@ results/                  — raw CSV files for all 9 trials
 
 ## Results Summary
 
+| Configuration | Mean | p50 | p95 | Throughput |
+|---|---|---|---|---|
 | Default CFS (Baseline) | 485.1ms | 501.9ms | 698.3ms | 2.07 img/sec |
 | One-Core Pinning | 944.9ms | 994.7ms | 1305.7ms | 1.06 img/sec |
 | Two-Core Pinning | 715.7ms | 749.4ms | 1003.5ms | 1.40 img/sec |
+
+Key finding: Default CFS outperformed both pinned configurations
+in the YOLO26+ByteTrack+CLIP pipeline, achieving 485.1ms mean latency
+vs 944.9ms for one-core pinning — a 95% increase.
+
+
 ---
 
 ## Folder Structure
